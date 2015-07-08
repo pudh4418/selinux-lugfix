@@ -1,0 +1,24 @@
+policy_module(lugfix, 1.0.4)
+
+require {
+	type var_log_t;
+	type var_lib_t;
+	type var_t;
+	type systemd_tmpfiles_t;
+	class dir setattr;
+}
+
+#============= systemd_tmpfiles_t ==============
+systemd_tmpfiles_manage_object(var_lib_t, dir)
+systemd_tmpfiles_manage_object(var_log_t, dir)
+systemd_tmpfiles_manage_object(var_t, dir)
+
+require {
+	type dhcpc_t;
+	type avahi_exec_t;
+	class file execute;
+}
+
+#============= dhcpc_t ==============
+avahi_domtrans(dhcpc_t)
+
