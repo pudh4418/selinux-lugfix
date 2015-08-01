@@ -1,4 +1,4 @@
-policy_module(lugfix, 1.0.4)
+policy_module(lugfix, 1.0.5)
 
 require {
 	type var_log_t;
@@ -28,4 +28,5 @@ require {
 
 #============= collectd_t =============
 corenet_tcp_connect_http_port(collectd_t)
+domain_read_all_domains_state(collectd_t)
 
