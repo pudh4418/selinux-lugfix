@@ -22,3 +22,10 @@ require {
 #============= dhcpc_t ==============
 avahi_domtrans(dhcpc_t)
 
+require {
+	type collectd_t;
+}
+
+#============= collectd_t =============
+corenet_tcp_connect_http_port(collectd_t)
+
