@@ -1,4 +1,4 @@
-policy_module(lugfix, 1.0.5)
+policy_module(lugfix, 1.0.6)
 
 require {
 	type var_log_t;
@@ -24,9 +24,11 @@ avahi_domtrans(dhcpc_t)
 
 require {
 	type collectd_t;
+	class capability { net_admin dac_override };
 }
 
 #============= collectd_t =============
 corenet_tcp_connect_http_port(collectd_t)
 domain_read_all_domains_state(collectd_t)
+allow collectd_t self:capability { net_admin dac_override };
 
