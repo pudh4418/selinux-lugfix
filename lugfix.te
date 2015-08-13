@@ -1,4 +1,4 @@
-policy_module(lugfix, 1.0.6)
+policy_module(lugfix, 1.0.7)
 
 require {
 	type var_log_t;
@@ -31,4 +31,11 @@ require {
 corenet_tcp_connect_http_port(collectd_t)
 domain_read_all_domains_state(collectd_t)
 allow collectd_t self:capability { net_admin dac_override };
+
+require {
+	type git_system_t;
+}
+
+#============= git_system_t ==============
+miscfiles_read_public_files(git_system_t)
 
