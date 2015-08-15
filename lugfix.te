@@ -1,4 +1,4 @@
-policy_module(lugfix, 1.0.7)
+policy_module(lugfix, 1.0.8)
 
 require {
 	type var_log_t;
@@ -38,4 +38,5 @@ require {
 
 #============= git_system_t ==============
 miscfiles_read_public_files(git_system_t)
+kernel_read_vm_sysctls(git_system_t)
 
