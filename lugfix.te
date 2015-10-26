@@ -30,6 +30,7 @@ require {
 #============= collectd_t =============
 corenet_tcp_connect_http_port(collectd_t)
 domain_read_all_domains_state(collectd_t)
+init_read_utmp(collectd_t)
 allow collectd_t self:capability { net_admin dac_override };
 
 require {
