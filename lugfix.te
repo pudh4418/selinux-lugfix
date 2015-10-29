@@ -1,4 +1,4 @@
-policy_module(lugfix, 1.0.8)
+policy_module(lugfix, 1.0.9)
 
 require {
 	type var_log_t;
@@ -40,4 +40,11 @@ require {
 #============= git_system_t ==============
 miscfiles_read_public_files(git_system_t)
 kernel_read_vm_sysctls(git_system_t)
+
+require {
+	type iptables_t;
+}
+
+domain_type(iptables_t)
+fail2ban_rw_inherited_tmp_files(iptables_t)
 
