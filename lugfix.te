@@ -1,4 +1,4 @@
-policy_module(lugfix, 1.0.11)
+policy_module(lugfix, 1.0.12)
 
 require {
 	type var_log_t;
@@ -24,6 +24,7 @@ avahi_domtrans(dhcpc_t)
 
 require {
 	type collectd_t;
+	type init_var_run_t;
 	class capability { net_admin dac_override };
 }
 
@@ -31,21 +32,25 @@ require {
 corenet_tcp_connect_http_port(collectd_t)
 domain_read_all_domains_state(collectd_t)
 init_read_utmp(collectd_t)
+read_files_pattern(collectd_t, init_var_run_t, init_var_run_t)
 allow collectd_t self:capability { net_admin dac_override };
 
 require {
 	type git_system_t;
 	type gitd_exec_t;
+	type git_sys_content_t;
 	class tcp_socket { accept listen };
 	class file execute_no_trans;
 }
 
 #============= git_system_t ==============
 miscfiles_read_public_files(git_system_t)
+read_lnk_files_pattern(git_system_t, git_sys_content_t, git_sys_content_t)
 kernel_read_vm_sysctls(git_system_t)
 dev_read_sysfs(git_system_t)
+files_search_mnt(git_system_t)
 allow git_system_t self:tcp_socket { accept listen };
-allow git_system_t gitd_exec_t:file execute_no_trans;
+can_exec(git_system_t, gitd_exec_t)
 
 #============= iptables_t ==============
 require {
