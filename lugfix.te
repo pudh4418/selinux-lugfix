@@ -1,4 +1,4 @@
-policy_module(lugfix, 1.0.10)
+policy_module(lugfix, 1.0.11)
 
 require {
 	type var_log_t;
@@ -35,12 +35,17 @@ allow collectd_t self:capability { net_admin dac_override };
 
 require {
 	type git_system_t;
+	type gitd_exec_t;
+	class tcp_socket { accept listen };
+	class file execute_no_trans;
 }
 
 #============= git_system_t ==============
 miscfiles_read_public_files(git_system_t)
 kernel_read_vm_sysctls(git_system_t)
 dev_read_sysfs(git_system_t)
+allow git_system_t self:tcp_socket { accept listen };
+allow git_system_t gitd_exec_t:file execute_no_trans;
 
 #============= iptables_t ==============
 require {
